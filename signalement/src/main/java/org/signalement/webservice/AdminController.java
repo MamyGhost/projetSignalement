@@ -29,6 +29,12 @@ public class AdminController {
     // select * from admin
     return AdminRepository.findAll();
 }
+
+     @GetMapping("/admin/{id}")
+    public Admin listAdmin(@PathVariable Integer id){
+    // select * from admin where id =
+    return AdminRepository.findById(id).get();
+}
     
     @PostMapping("/admin")
     public Admin save(@RequestBody Admin admin){
