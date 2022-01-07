@@ -5,6 +5,7 @@
  */
 package org.signalement.webservice;
 
+
 import java.net.URI;
 import java.util.Optional;
 import org.signalement.entities.Signalement;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+
 /**
  *
  * @author Mamitiana
@@ -29,7 +31,7 @@ public class SignalementControl {
     
      @Autowired
     private SignalementRepository signalementRepository;
-     
+    
      @GetMapping("/signalement/{id}")
         public ResponseEntity<Signalement> getSignalementById(@PathVariable("id") int id) {
           Optional<Signalement> sData = signalementRepository.findById(id);
@@ -59,5 +61,6 @@ public class SignalementControl {
     }
     
 }
+
     
 }

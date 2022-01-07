@@ -33,6 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Type.findAll", query = "SELECT t FROM Type t")})
+
 @JsonIdentityInfo(scope = Type.class,
   generator = ObjectIdGenerators.PropertyGenerator.class, 
   property = "id")

@@ -53,8 +53,10 @@ create table statut(
 
 create table signalement(
 	Id INT NOT NULL AUTO_INCREMENT primary key,
+
 	Userfront int,
 	Utilisateur int ,
+
 	Description varchar(1000),
 	Statut int ,
 	Region int ,
@@ -62,6 +64,7 @@ create table signalement(
 	daty date,
 	Latitude decimal(10,8),
 	Longitude decimal(10,8),
+
 	FOREIGN KEY(Utilisateur) REFERENCES utilisateur(Id),
 	FOREIGN KEY(Type) REFERENCES type(Id),
 	FOREIGN KEY(Region) REFERENCES region(Id),
@@ -120,18 +123,23 @@ insert into region values
 	(null,"Anosy",6);
 
 insert into signalNew values(null,"Accident de voitures su la route de RN2");
+
 insert into signalNew values(null,"Accident de voitures su la route de RN1");
+
 
 insert into statut values
 	(null,"Nouveau"),
 	(null,"En cours"),
 	(null,"Terminé");
 
+
 insert into signalement values(null,2,"Aucun description",1,null,3,"2022-01-15",-19.715,46.75781);
 
 insert into photo values
 	(null,2,"test.png"),
 	(null,2,"test2.png");
+
+<
 
 drop database signalement;
 
@@ -175,6 +183,7 @@ drop database signalement;
 //                macarte.setView([latnew, lonnew], 11);
 //              });
 //            }
+
             </script>
 
 
@@ -211,3 +220,4 @@ drop database signalement;
 				"titre":"Accident de voitures su la route de RN1"
 			}
 }
+

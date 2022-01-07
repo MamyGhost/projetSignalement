@@ -33,9 +33,11 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Signalnew.findAll", query = "SELECT s FROM Signalnew s")})
+
 @JsonIdentityInfo(scope = Signalnew.class,
   generator = ObjectIdGenerators.PropertyGenerator.class, 
   property = "id")
+
 public class Signalnew implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -36,6 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Region.findAll", query = "SELECT r FROM Region r")})
+
 @JsonIdentityInfo(scope = Region.class,
   generator = ObjectIdGenerators.PropertyGenerator.class, 
   property = "id")

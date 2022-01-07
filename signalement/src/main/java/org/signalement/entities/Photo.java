@@ -31,9 +31,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Photo.findAll", query = "SELECT p FROM Photo p")})
+
 @JsonIdentityInfo(scope = Photo.class,
   generator = ObjectIdGenerators.PropertyGenerator.class, 
   property = "id")
+
+
 public class Photo implements Serializable {
 
     private static final long serialVersionUID = 1L;
