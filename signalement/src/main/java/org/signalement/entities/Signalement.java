@@ -5,6 +5,11 @@
  */
 package org.signalement.entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -39,12 +44,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Signalement.findAll", query = "SELECT s FROM Signalement s")})
-
 @JsonIdentityInfo(scope = Signalement.class,
   generator = ObjectIdGenerators.PropertyGenerator.class, 
   property = "id")
-
-
 public class Signalement implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -63,11 +65,9 @@ public class Signalement implements Serializable {
     private BigDecimal latitude;
     @Column(name = "Longitude")
     private BigDecimal longitude;
-
     @JoinColumn(name = "Utilisateur", referencedColumnName = "Id") 
     @ManyToOne
     private Utilisateur utilisateur;
-
     @JoinColumn(name = "Type", referencedColumnName = "Id")
     @ManyToOne
     private Type type;

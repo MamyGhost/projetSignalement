@@ -33,11 +33,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Statut.findAll", query = "SELECT s FROM Statut s")})
-
 @JsonIdentityInfo(scope = Statut.class,
   generator = ObjectIdGenerators.PropertyGenerator.class, 
   property = "id")
-
 public class Statut implements Serializable {
 
     private static final long serialVersionUID = 1L;

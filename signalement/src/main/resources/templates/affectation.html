@@ -4,17 +4,13 @@
       layout:decorate="template"     
       lang="en">
   <head>
-
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
-
         <style type="text/css">
             #map{ /* la carte DOIT avoir une hauteur sinon elle n'apparaît pas */
                 height:500px;
             }
         </style>
-
         <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
-
     <title>Affectation</title>
     <meta charset="utf-8">
   </head>
@@ -29,10 +25,8 @@
                 </div>
                     <div class="col-md-10">
                     <div class="tile">
-
                       <h3 class="tile-title">Liste des signalements non affecte</h3>
-
-                      <table class="table table-hover">
+                      <table class="table table-hover table-responsive">
                         <thead>
                           <tr>
                             <th>Titre</th>
@@ -45,13 +39,12 @@
                             <th th:text="${testa}"></th>
                           </tr>
                         </thead>
-                        <tbody>
-                          <tr class="clicktr" th:each="s:${signalement}">
+                        <tbody class ="clickb">
+                          <tr th:each="s:${signalement}">
                             <td th:text="${s.getSignalnew().getTitre()}"></td>
                             <td th:text="${s.getType().getNom()}"></td>
                             <td class="lat" th:text="${s.getLatitude()}"></td>
                             <td class="long" th:text="${s.getLongitude()}"></td>
-
                             <form method="get" action="/admin/updateregion">
                                  <td>
                                 <select  id="inputState" name="region" class="form-control">
@@ -62,7 +55,6 @@
                             </td>
                             <td><button type="submit" name="id" th:value="${s.getId()}" class="btn btn-outline-primary">Affecter</button>
                             </td>
-
                             </form>
                           </tr>
                         </tbody>
@@ -71,7 +63,6 @@
                   </div>
                 </div>
         </main>
-
         <script th:inline="javascript">
           var size = [[${signalement.size()}]];
           var dataLayer = new Array(0);
@@ -85,6 +76,7 @@
             var lat = 48.852969;
             var lon = 2.349903;
             var macarte = null;
+            alert(dataLayer.length);
             // Fonction d'initialisation de la carte
             function initMap() {
                 // Créer l'objet "macarte" et l'insèrer dans l'élément HTML qui a l'ID "map"
@@ -103,19 +95,24 @@
                   
             }
             function clicktr(){
-                let tr=$(".clicktr");
-                tr.click(function(){
-                // Holds the product ID of the clicked element
-                let latnew=tr.find(".lat").text();
-                let lonnew=tr.find(".long").text();
-                macarte.setView([latnew, lonnew], 11);
-
-                var popup = L.popup({ offset: L.point(0, -30) });
-                popup
-                .setLatLng([latnew, lonnew])
-                .setContent("C' est ici")
-                .openOn(macarte);
+                var tbody=$(".clickb");
+                var children = tbody.children();
+                for(let i = 0; i < children.length; i++)
+                {
+                    children.eq(i).click(function(){
+                    // Holds the product ID of the clicked element
+                    let latnew=children.eq(i).find(".lat").text();
+                    let lonnew=children.eq(i).find(".long").text();
+                    macarte.setView([latnew, lonnew], 11);
+                    var popup = L.popup({ offset: L.point(0, -30) });
+                                       
+                    popup
+                    .setLatLng([latnew, lonnew])
+                    .setContent("C' est ici")
+                    .openOn(macarte);
               });
+                    
+                }
             }
             window.onload = function(){
 		// Fonction d'initialisation qui s'exécute lorsque le DOM est chargé

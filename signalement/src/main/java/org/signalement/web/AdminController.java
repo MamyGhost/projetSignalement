@@ -38,7 +38,6 @@ public class AdminController {
     @Autowired
     private RegionRepository regionRepository;
     
-
     @GetMapping("/admin/login")
     public String login(@RequestParam(name="error", defaultValue="0") int error,Model model ){
         if(error == 1){
@@ -69,20 +68,16 @@ public class AdminController {
    
     }
     
-
     @GetMapping("/admin/affectation")
     public String affectation(Model model){
-
          List<Signalement> lista=signalementRepository.findByRegionIsNull();
          List<Region> listar=regionRepository.findAll();
          model.addAttribute("signalement", lista);
           model.addAttribute("region", listar);
-
          return "affectation";
    
     }
     
-
      @GetMapping("/admin/updateregion")
     public String updateregion(@RequestParam(name="region") Integer regionid, @RequestParam(name="id") Integer id ){
         Signalement s=signalementRepository.findById(id).get();
@@ -93,5 +88,5 @@ public class AdminController {
    
     }
     
-
+    
 }

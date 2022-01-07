@@ -30,7 +30,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Utilisateur.findAll", query = "SELECT u FROM Utilisateur u")})
-
 @JsonIdentityInfo(scope = Utilisateur.class,
   generator = ObjectIdGenerators.PropertyGenerator.class, 
   property = "id")

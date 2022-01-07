@@ -33,11 +33,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Userfront.findAll", query = "SELECT u FROM Userfront u")})
-
 @JsonIdentityInfo(scope = Userfront.class,
   generator = ObjectIdGenerators.PropertyGenerator.class, 
   property = "id")
-
 public class Userfront implements Serializable {
 
     private static final long serialVersionUID = 1L;
