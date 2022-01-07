@@ -28,9 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "statut")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Statut.findAll", query = "SELECT s FROM Statut s")
-    , @NamedQuery(name = "Statut.findById", query = "SELECT s FROM Statut s WHERE s.id = :id")
-    , @NamedQuery(name = "Statut.findByEtat", query = "SELECT s FROM Statut s WHERE s.etat = :etat")})
+    @NamedQuery(name = "Statut.findAll", query = "SELECT s FROM Statut s")})
 public class Statut implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -40,7 +38,7 @@ public class Statut implements Serializable {
     @Column(name = "Id")
     private Integer id;
     @Column(name = "Etat")
-    private Boolean etat;
+    private String etat;
     @OneToMany(mappedBy = "statut")
     private List<Signalement> signalementList;
 
@@ -59,11 +57,11 @@ public class Statut implements Serializable {
         this.id = id;
     }
 
-    public Boolean getEtat() {
+    public String getEtat() {
         return etat;
     }
 
-    public void setEtat(Boolean etat) {
+    public void setEtat(String etat) {
         this.etat = etat;
     }
 

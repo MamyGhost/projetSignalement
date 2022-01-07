@@ -5,10 +5,17 @@
  */
 package org.signalement.web;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.signalement.entities.Admin;
+import org.signalement.entities.Region;
+import org.signalement.entities.Signalement;
 import org.signalement.repository.AdminRepository;
+import org.signalement.repository.RegionRepository;
+import org.signalement.repository.SignalementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +31,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AdminController {
     @Autowired
     private AdminRepository adminRepository;
+    
+    @Autowired
+    private SignalementRepository signalementRepository;
+    
+    @Autowired
+    private RegionRepository regionRepository;
     
     @GetMapping("admin/login")
     public String login(@RequestParam(name="error", defaultValue="0") int error,Model model ){
@@ -52,6 +65,23 @@ public class AdminController {
     @GetMapping("admin/stat")
     public String stat(){
          return "charts";
+   
+    }
+    
+    @GetMapping("admin/affectation")
+    public String affectation(Model model) throws JsonProcessingException{
+         List<Signalement> lista=signalementRepository.findByRegionIsNull();
+         List<Region> listar=regionRepository.findAll();
+         model.addAttribute("signalement", lista);
+          model.addAttribute("region", listar);
+          model.addAttribute("testa", "tay");
+//        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+//        String json = ow.writeValueAsString();
+
+//        
+          System.out.println("fory be :"+lista.get(0));
+          
+         return "affectation";
    
     }
     
