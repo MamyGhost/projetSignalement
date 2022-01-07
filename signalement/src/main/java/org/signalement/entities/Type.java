@@ -5,6 +5,10 @@
  */
 package org.signalement.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -28,9 +32,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "type")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Type.findAll", query = "SELECT t FROM Type t")
-    , @NamedQuery(name = "Type.findById", query = "SELECT t FROM Type t WHERE t.id = :id")
-    , @NamedQuery(name = "Type.findByNom", query = "SELECT t FROM Type t WHERE t.nom = :nom")})
+    @NamedQuery(name = "Type.findAll", query = "SELECT t FROM Type t")})
+@JsonIdentityInfo(scope = Type.class,
+  generator = ObjectIdGenerators.PropertyGenerator.class, 
+  property = "id")
 public class Type implements Serializable {
 
     private static final long serialVersionUID = 1L;

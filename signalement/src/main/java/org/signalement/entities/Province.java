@@ -7,7 +7,7 @@ package org.signalement.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.List;
@@ -29,14 +29,14 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Mamitiana
  */
 @Entity
-@Table(name = "statut")
+@Table(name = "province")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Statut.findAll", query = "SELECT s FROM Statut s")})
-@JsonIdentityInfo(scope = Statut.class,
+    @NamedQuery(name = "Province.findAll", query = "SELECT p FROM Province p")})
+@JsonIdentityInfo(scope = Province.class,
   generator = ObjectIdGenerators.PropertyGenerator.class, 
   property = "id")
-public class Statut implements Serializable {
+public class Province implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -44,15 +44,15 @@ public class Statut implements Serializable {
     @Basic(optional = false)
     @Column(name = "Id")
     private Integer id;
-    @Column(name = "Etat")
-    private String etat;
-    @OneToMany(mappedBy = "statut")
-    private List<Signalement> signalementList;
+    @Column(name = "Nom")
+    private String nom;
+    @OneToMany(mappedBy = "province")
+    private List<Region> regionList;
 
-    public Statut() {
+    public Province() {
     }
 
-    public Statut(Integer id) {
+    public Province(Integer id) {
         this.id = id;
     }
 
@@ -64,21 +64,21 @@ public class Statut implements Serializable {
         this.id = id;
     }
 
-    public String getEtat() {
-        return etat;
+    public String getNom() {
+        return nom;
     }
 
-    public void setEtat(String etat) {
-        this.etat = etat;
+    public void setNom(String nom) {
+        this.nom = nom;
     }
 
     @XmlTransient
-    public List<Signalement> getSignalementList() {
-        return signalementList;
+    public List<Region> getRegionList() {
+        return regionList;
     }
 
-    public void setSignalementList(List<Signalement> signalementList) {
-        this.signalementList = signalementList;
+    public void setRegionList(List<Region> regionList) {
+        this.regionList = regionList;
     }
 
     @Override
@@ -91,10 +91,10 @@ public class Statut implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Statut)) {
+        if (!(object instanceof Province)) {
             return false;
         }
-        Statut other = (Statut) object;
+        Province other = (Province) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -103,7 +103,7 @@ public class Statut implements Serializable {
 
     @Override
     public String toString() {
-        return "org.signalement.entities.Statut[ id=" + id + " ]";
+        return "org.signalement.entities.Province[ id=" + id + " ]";
     }
     
 }

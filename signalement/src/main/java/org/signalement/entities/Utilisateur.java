@@ -5,7 +5,10 @@
  */
 package org.signalement.entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -25,10 +29,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "utilisateur")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Utilisateur.findAll", query = "SELECT u FROM Utilisateur u")
-    , @NamedQuery(name = "Utilisateur.findById", query = "SELECT u FROM Utilisateur u WHERE u.id = :id")
-    , @NamedQuery(name = "Utilisateur.findByUsername", query = "SELECT u FROM Utilisateur u WHERE u.username = :username")
-    , @NamedQuery(name = "Utilisateur.findByPassword", query = "SELECT u FROM Utilisateur u WHERE u.password = :password")})
+    @NamedQuery(name = "Utilisateur.findAll", query = "SELECT u FROM Utilisateur u")})
+@JsonIdentityInfo(scope = Utilisateur.class,
+  generator = ObjectIdGenerators.PropertyGenerator.class, 
+  property = "id")
 public class Utilisateur implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,6 +45,9 @@ public class Utilisateur implements Serializable {
     private String username;
     @Column(name = "Password")
     private String password;
+     @OneToMany(mappedBy = "utilisateur")
+    private List<Signalement> signalementList;
+
 
     public Utilisateur() {
     }
@@ -72,6 +79,16 @@ public class Utilisateur implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public List<Signalement> getSignalementList() {
+        return signalementList;
+    }
+
+    public void setSignalementList(List<Signalement> signalementList) {
+        this.signalementList = signalementList;
+    }
+    
+    
 
     @Override
     public int hashCode() {

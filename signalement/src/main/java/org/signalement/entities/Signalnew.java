@@ -5,6 +5,10 @@
  */
 package org.signalement.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -28,9 +32,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "signalnew")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Signalnew.findAll", query = "SELECT s FROM Signalnew s")
-    , @NamedQuery(name = "Signalnew.findById", query = "SELECT s FROM Signalnew s WHERE s.id = :id")
-    , @NamedQuery(name = "Signalnew.findByTitre", query = "SELECT s FROM Signalnew s WHERE s.titre = :titre")})
+    @NamedQuery(name = "Signalnew.findAll", query = "SELECT s FROM Signalnew s")})
+@JsonIdentityInfo(scope = Signalnew.class,
+  generator = ObjectIdGenerators.PropertyGenerator.class, 
+  property = "id")
 public class Signalnew implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,7 +46,7 @@ public class Signalnew implements Serializable {
     private Integer id;
     @Column(name = "Titre")
     private String titre;
-    @OneToMany(mappedBy = "signalNew")
+    @OneToMany(mappedBy = "signalnew")
     private List<Signalement> signalementList;
 
     public Signalnew() {

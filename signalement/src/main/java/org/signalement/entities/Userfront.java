@@ -5,7 +5,11 @@
  */
 package org.signalement.entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +20,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -27,10 +32,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "userfront")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Userfront.findAll", query = "SELECT u FROM Userfront u")
-    , @NamedQuery(name = "Userfront.findById", query = "SELECT u FROM Userfront u WHERE u.id = :id")
-    , @NamedQuery(name = "Userfront.findByUsername", query = "SELECT u FROM Userfront u WHERE u.username = :username")
-    , @NamedQuery(name = "Userfront.findByPassword", query = "SELECT u FROM Userfront u WHERE u.password = :password")})
+    @NamedQuery(name = "Userfront.findAll", query = "SELECT u FROM Userfront u")})
+@JsonIdentityInfo(scope = Userfront.class,
+  generator = ObjectIdGenerators.PropertyGenerator.class, 
+  property = "id")
 public class Userfront implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,7 +51,7 @@ public class Userfront implements Serializable {
     @JoinColumn(name = "Region", referencedColumnName = "Id")
     @ManyToOne
     private Region region;
-
+   
     public Userfront() {
     }
 

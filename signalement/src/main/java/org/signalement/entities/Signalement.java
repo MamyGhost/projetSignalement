@@ -5,12 +5,22 @@
  */
 package org.signalement.entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,12 +43,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "signalement")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Signalement.findAll", query = "SELECT s FROM Signalement s")
-    , @NamedQuery(name = "Signalement.findById", query = "SELECT s FROM Signalement s WHERE s.id = :id")
-    , @NamedQuery(name = "Signalement.findByDescription", query = "SELECT s FROM Signalement s WHERE s.description = :description")
-    , @NamedQuery(name = "Signalement.findByDaty", query = "SELECT s FROM Signalement s WHERE s.daty = :daty")
-    , @NamedQuery(name = "Signalement.findByLatitude", query = "SELECT s FROM Signalement s WHERE s.latitude = :latitude")
-    , @NamedQuery(name = "Signalement.findByLongitude", query = "SELECT s FROM Signalement s WHERE s.longitude = :longitude")})
+    @NamedQuery(name = "Signalement.findAll", query = "SELECT s FROM Signalement s")})
+@JsonIdentityInfo(scope = Signalement.class,
+  generator = ObjectIdGenerators.PropertyGenerator.class, 
+  property = "id")
 public class Signalement implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -52,22 +60,26 @@ public class Signalement implements Serializable {
     @Column(name = "daty")
     @Temporal(TemporalType.DATE)
     private Date daty;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "Latitude")
-    private Long latitude;
+    private BigDecimal latitude;
     @Column(name = "Longitude")
-    private Long longitude;
+    private BigDecimal longitude;
+    @JoinColumn(name = "Utilisateur", referencedColumnName = "Id") 
+    @ManyToOne
+    private Utilisateur utilisateur;
     @JoinColumn(name = "Type", referencedColumnName = "Id")
     @ManyToOne
     private Type type;
     @JoinColumn(name = "Region", referencedColumnName = "Id")
     @ManyToOne
     private Region region;
-    @JoinColumn(name = "Statut", referencedColumnName = "Id")
+    @JoinColumn(name = "Statut", referencedColumnName = "Id") 
     @ManyToOne
     private Statut statut;
-    @JoinColumn(name = "SignalNew", referencedColumnName = "Id")
+    @JoinColumn(name = "Signalnew", referencedColumnName = "Id")
     @ManyToOne
-    private Signalnew signalNew;
+    private Signalnew signalnew;
     @OneToMany(mappedBy = "signalement")
     private List<Photo> photoList;
 
@@ -102,19 +114,19 @@ public class Signalement implements Serializable {
         this.daty = daty;
     }
 
-    public Long getLatitude() {
+    public BigDecimal getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(Long latitude) {
+    public void setLatitude(BigDecimal latitude) {
         this.latitude = latitude;
     }
 
-    public Long getLongitude() {
+    public BigDecimal getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(Long longitude) {
+    public void setLongitude(BigDecimal longitude) {
         this.longitude = longitude;
     }
 
@@ -142,12 +154,12 @@ public class Signalement implements Serializable {
         this.statut = statut;
     }
 
-    public Signalnew getSignalNew() {
-        return signalNew;
+    public Signalnew getSignalnew() {
+        return signalnew;
     }
 
-    public void setSignalNew(Signalnew signalNew) {
-        this.signalNew = signalNew;
+    public void setSignalnew(Signalnew signalnew) {
+        this.signalnew = signalnew;
     }
 
     @XmlTransient
@@ -158,6 +170,18 @@ public class Signalement implements Serializable {
     public void setPhotoList(List<Photo> photoList) {
         this.photoList = photoList;
     }
+
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
+    }
+
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
+    }
+
+    
+    
+    
 
     @Override
     public int hashCode() {
@@ -183,5 +207,18 @@ public class Signalement implements Serializable {
     public String toString() {
         return "org.signalement.entities.Signalement[ id=" + id + " ]";
     }
+
+    public Signalement(Integer id, String description, Date daty, BigDecimal latitude, BigDecimal longitude, Type type, Statut statut, Signalnew signalnew) {
+        this.id = id;
+        this.description = description;
+        this.daty = daty;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.type = type;
+        this.statut = statut;
+        this.signalnew = signalnew;
+    }
+    
+    
     
 }
