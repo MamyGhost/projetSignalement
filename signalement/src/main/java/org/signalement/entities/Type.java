@@ -5,9 +5,8 @@
  */
 package org.signalement.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.List;
@@ -47,6 +46,7 @@ public class Type implements Serializable {
     @Column(name = "Nom")
     private String nom;
     @OneToMany(mappedBy = "type")
+    @JsonIgnore
     private List<Signalement> signalementList;
 
     public Type() {

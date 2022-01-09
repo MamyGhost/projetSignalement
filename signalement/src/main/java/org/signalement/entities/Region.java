@@ -5,10 +5,8 @@
  */
 package org.signalement.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.List;
@@ -36,9 +34,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Region.findAll", query = "SELECT r FROM Region r")})
-@JsonIdentityInfo(scope = Region.class,
+ @JsonIdentityInfo(scope = Region.class,
   generator = ObjectIdGenerators.PropertyGenerator.class, 
   property = "id")
+
 public class Region implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -50,8 +49,10 @@ public class Region implements Serializable {
     @Column(name = "Nom")
     private String nom;
     @OneToMany(mappedBy = "region")
+    @JsonIgnore
     private List<Userfront> userfrontList;
     @OneToMany(mappedBy = "region")
+    @JsonIgnore
     private List<Signalement> signalementList;
     @JoinColumn(name = "Province", referencedColumnName = "Id")
     @ManyToOne

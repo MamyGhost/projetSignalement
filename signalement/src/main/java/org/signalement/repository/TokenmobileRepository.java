@@ -4,12 +4,14 @@
  * and open the template in the editor.
  */
 package org.signalement.repository;
-import org.signalement.entities.Userfront;
+
+import org.signalement.entities.Tokenmobile;
 import org.springframework.data.jpa.repository.JpaRepository;
+
 /**
  *
  * @author Mamitiana
  */
-public interface UserfrontRepository extends JpaRepository<Userfront, Integer> {
-   
+public interface TokenmobileRepository extends JpaRepository<Tokenmobile, Integer> {
+     public Tokenmobile findByToken(String token);
 }

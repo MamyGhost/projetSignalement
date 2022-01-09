@@ -15,4 +15,7 @@ import org.springframework.data.repository.query.Param;
  */
 public interface SignalementRepository extends JpaRepository<Signalement, Integer> {
     public List<Signalement>  findByRegionIsNull();
+    
+    @Query("SELECT s FROM Signalement s WHERE s.type.id = :idtype")
+   List<Signalement>  chercherpartype(@Param("idtype") int idtype);
 }

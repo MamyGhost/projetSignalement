@@ -6,7 +6,6 @@
 package org.signalement.entities;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.List;
@@ -23,6 +22,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -36,6 +36,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @JsonIdentityInfo(scope = Userfront.class,
   generator = ObjectIdGenerators.PropertyGenerator.class, 
   property = "id")
+
 public class Userfront implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -51,7 +52,9 @@ public class Userfront implements Serializable {
     @JoinColumn(name = "Region", referencedColumnName = "Id")
     @ManyToOne
     private Region region;
-   
+    @OneToMany(mappedBy = "userfront")
+    private List<Tokenfront> tokenfrontList;
+
     public Userfront() {
     }
 
@@ -89,6 +92,15 @@ public class Userfront implements Serializable {
 
     public void setRegion(Region region) {
         this.region = region;
+    }
+
+    @XmlTransient
+    public List<Tokenfront> getTokenfrontList() {
+        return tokenfrontList;
+    }
+
+    public void setTokenfrontList(List<Tokenfront> tokenfrontList) {
+        this.tokenfrontList = tokenfrontList;
     }
 
     @Override

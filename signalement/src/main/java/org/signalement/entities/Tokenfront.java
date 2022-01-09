@@ -6,37 +6,38 @@
 package org.signalement.entities;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
-import java.util.List;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author Mamitiana
  */
 @Entity
-@Table(name = "signalnew")
+@Table(name = "tokenfront")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Signalnew.findAll", query = "SELECT s FROM Signalnew s")})
-@JsonIdentityInfo(scope = Signalnew.class,
+    @NamedQuery(name = "Tokenfront.findAll", query = "SELECT t FROM Tokenfront t")})
+ @JsonIdentityInfo(scope = Tokenfront.class,
   generator = ObjectIdGenerators.PropertyGenerator.class, 
   property = "id")
 
-public class Signalnew implements Serializable {
+public class Tokenfront implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -44,16 +45,19 @@ public class Signalnew implements Serializable {
     @Basic(optional = false)
     @Column(name = "Id")
     private Integer id;
-    @Column(name = "Titre")
-    private String titre;
-    @OneToMany(mappedBy = "signalnew")
-    @JsonIgnore
-    private List<Signalement> signalementList;
+    @Column(name = "Token")
+    private String token;
+    @Column(name = "Dateexp")
+    @Temporal(TemporalType.DATE)
+    private Date dateexp;
+    @JoinColumn(name = "Userfront", referencedColumnName = "Id")
+    @ManyToOne
+    private Userfront userfront;
 
-    public Signalnew() {
+    public Tokenfront() {
     }
 
-    public Signalnew(Integer id) {
+    public Tokenfront(Integer id) {
         this.id = id;
     }
 
@@ -65,21 +69,28 @@ public class Signalnew implements Serializable {
         this.id = id;
     }
 
-    public String getTitre() {
-        return titre;
+    public String getToken() {
+        return token;
     }
 
-    public void setTitre(String titre) {
-        this.titre = titre;
+    public void setToken(String token) {
+        this.token = token;
     }
 
-    @XmlTransient
-    public List<Signalement> getSignalementList() {
-        return signalementList;
+    public Date getDateexp() {
+        return dateexp;
     }
 
-    public void setSignalementList(List<Signalement> signalementList) {
-        this.signalementList = signalementList;
+    public void setDateexp(Date dateexp) {
+        this.dateexp = dateexp;
+    }
+
+    public Userfront getUserfront() {
+        return userfront;
+    }
+
+    public void setUserfront(Userfront userfront) {
+        this.userfront = userfront;
     }
 
     @Override
@@ -92,10 +103,10 @@ public class Signalnew implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Signalnew)) {
+        if (!(object instanceof Tokenfront)) {
             return false;
         }
-        Signalnew other = (Signalnew) object;
+        Tokenfront other = (Tokenfront) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -104,7 +115,7 @@ public class Signalnew implements Serializable {
 
     @Override
     public String toString() {
-        return "org.signalement.entities.Signalnew[ id=" + id + " ]";
+        return "org.signalement.entities.Tokenfront[ id=" + id + " ]";
     }
     
 }

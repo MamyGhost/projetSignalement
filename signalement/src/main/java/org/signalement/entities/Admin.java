@@ -5,6 +5,8 @@
  */
 package org.signalement.entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -26,6 +28,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Admin.findAll", query = "SELECT a FROM Admin a")})
+@JsonIdentityInfo(scope = Admin.class,
+  generator = ObjectIdGenerators.PropertyGenerator.class, 
+  property = "id")
+
 public class Admin implements Serializable {
 
     private static final long serialVersionUID = 1L;

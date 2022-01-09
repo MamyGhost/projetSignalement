@@ -5,9 +5,8 @@
  */
 package org.signalement.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.List;
@@ -33,9 +32,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Statut.findAll", query = "SELECT s FROM Statut s")})
-@JsonIdentityInfo(scope = Statut.class,
+ @JsonIdentityInfo(scope = Statut.class,
   generator = ObjectIdGenerators.PropertyGenerator.class, 
   property = "id")
+
 public class Statut implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,6 +47,7 @@ public class Statut implements Serializable {
     @Column(name = "Etat")
     private String etat;
     @OneToMany(mappedBy = "statut")
+    @JsonIgnore
     private List<Signalement> signalementList;
 
     public Statut() {
