@@ -6,7 +6,6 @@
 package org.signalement.webservice;
 
 import java.net.URI;
-import java.util.List;
 import java.util.Optional;
 import org.signalement.entities.Signalement;
 import org.signalement.repository.SignalementRepository;
@@ -31,7 +30,7 @@ public class SignalementControl {
      @Autowired
     private SignalementRepository signalementRepository;
      
-     @GetMapping("/wb/signalement/{id}")
+     @GetMapping("/signalement/{id}")
         public ResponseEntity<Signalement> getSignalementById(@PathVariable("id") int id) {
           Optional<Signalement> sData = signalementRepository.findById(id);
 
@@ -41,21 +40,8 @@ public class SignalementControl {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
           }
         }
-        
-        
-    @GetMapping("wb/type/{idtype}/signalement")
-        public ResponseEntity<List<Signalement>> getSignalementBytype(@PathVariable("idtype") int id) {
-          List<Signalement> sData = signalementRepository.chercherpartype(id);
 
-          if (!sData.isEmpty()) {
-            return new ResponseEntity<>(sData, HttpStatus.OK);
-          } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-          }
-        }
-        
-
-    @PostMapping("/wb/signalement")
+    @PostMapping("/signalement")
     public ResponseEntity<Signalement> save(@RequestBody Signalement signalement){
         // inserte admin
        try {

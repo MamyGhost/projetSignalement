@@ -5,11 +5,9 @@
  */
 package org.signalement.entities;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.List;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,6 +21,9 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 /**
  *
  * @author Mamitiana
@@ -35,7 +36,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @JsonIdentityInfo(scope = Signalnew.class,
   generator = ObjectIdGenerators.PropertyGenerator.class, 
   property = "id")
-
 public class Signalnew implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,7 +47,6 @@ public class Signalnew implements Serializable {
     @Column(name = "Titre")
     private String titre;
     @OneToMany(mappedBy = "signalnew")
-    @JsonIgnore
     private List<Signalement> signalementList;
 
     public Signalnew() {
@@ -91,7 +90,6 @@ public class Signalnew implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Signalnew)) {
             return false;
         }

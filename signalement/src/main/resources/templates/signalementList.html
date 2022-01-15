@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template"     
+      lang="en">
+  <head>
+    <title>Ressources Management</title>
+    <meta charset="utf-8">§
+  </head>
+  <body class="app sidebar-mini rtl">
+    <div layout:fragment="content1">
+      <main class="app-content">
+        <div class="row justify-content-center">
+          <div class="col-md-10">
+            <div class="tile">
+              <h3 class="tile-title">Listes des Signalement</h3>
+              <table class="table table-hover table-responsive">
+                <thead>
+                  <tr>
+                    <th>Id</th>
+                    <th>Titre</th>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Region</th>
+                    <th></th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody class="clickb">
+                <tr th:each="s:${signalement}">
+                  <td th:text="${s.getId}"></td>
+                  <td th:text="${s.getSignalnew().getTitre()}"></td>
+                  <td th:text="${s.getDaty}"></td>
+                  <td th:text="${s.getType().getNom()}"></td>
+                  <td th:text="${s.getRegion.getNom}"></td>
+                  <td>
+                    <a role="button" name="id" th:href="@{/manageResource/viewSIGN/{id}(id=${s.getId})}"
+                    class="btn btn-outline-primary">Voir detail</a>
+                  </td>
+                  <td>
+                    <a role="button" onclick="confDelete()" name="id" th:href="@{/manageResource/deleteSIGN/{id}(id=${s.getId})}"
+                    class="btn btn-outline-danger">Supprimer</a>
+                  </td>
+                </tr>
+              </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </main>
+      <script th:src="@{/js/plugins/sweetalert.min.js}"></script>
+      <script type="text/javascript">
+        function confDelete(event){
+          alert("qsdqsd");
+          return false;
+        }
+    </script>
+    </div>
+    
+  </body>
+</html>

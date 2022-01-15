@@ -34,22 +34,6 @@ create table userfront(
 	FOREIGN KEY(Region) REFERENCES region(Id)
 )ENGINE=InnoDB;
 
-create table tokenfront(
-	 Id INT NOT NULL AUTO_INCREMENT primary key,
-	 Userfront int,
-	 Token varchar(700),
-	 Dateexp date,
-	 FOREIGN KEY(Userfront) REFERENCES userfront(Id)
-)ENGINE=InnoDB;
-
-create table tokenmobile(
-	 Id INT NOT NULL AUTO_INCREMENT primary key,
-	 Utilisateur int,
-	 Token varchar(700),
-	 Dateexp date,
-	 FOREIGN KEY(Utilisateur) REFERENCES utilisateur(Id)
-)ENGINE=InnoDB;
-
 
 create table type(
 	Id INT NOT NULL AUTO_INCREMENT primary key,
@@ -69,7 +53,7 @@ create table statut(
 
 create table signalement(
 	Id INT NOT NULL AUTO_INCREMENT primary key,
-	Signalnew int,
+	Userfront int,
 	Utilisateur int ,
 	Description varchar(1000),
 	Statut int ,
@@ -97,9 +81,6 @@ create table photo(
 
 insert into admin values
 	(null,"admin","0000");
-
-insert into utilisateur values
-	(null,"user","0000");
 
 insert into type values
 	(null,"vol"),
@@ -146,11 +127,11 @@ insert into statut values
 	(null,"En cours"),
 	(null,"Terminé");
 
-insert into signalement values(null,1,1,"Aucun description",1,3,3,"2022-01-15",-19.715,46.75781);
+insert into signalement values(null,2,"Aucun description",1,null,3,"2022-01-15",-19.715,46.75781);
 
 insert into photo values
-	(null,1,"test.png"),
-	(null,1,"test2.png");
+	(null,2,"test.png"),
+	(null,2,"test2.png");
 
 drop database signalement;
 
@@ -230,79 +211,3 @@ drop database signalement;
 				"titre":"Accident de voitures su la route de RN1"
 			}
 }
-
-
-
-{
-    "description": "Aucun description",
-    "daty": "2022-01-15",
-    "latitude": -19.715,
-    "longitude": 46.75781,
-    "type": {
-        "id": 3,
-        "nom": "autres"
-    },
-    "region": null,
-    "statut": {
-        "id": 1,
-        "etat": "Nouveau"
-    },
-    "signalnew": {
-        "id": 2,
-        "titre": "Accident de voitures su la route de RN1"
-    },
-    "photoList": []
-}
-
-
- var tbody=$(".clickb");
-                 for(var i=0;i<dataLayer.length;i++)
-                    {
-                       tbody.
-                    }
-                let tr=$(".clickb");
-                $('div.rotation ul:eq(2)').addClass('image_rotation');
-                .children("ul").addClass( "MyClass");
-
-
-
-@JsonIdentityInfo(scope = Photo.class,
-  generator = ObjectIdGenerators.PropertyGenerator.class, 
-  property = "id")
-
-  @JsonIdentityInfo(scope = Province.class,
-  generator = ObjectIdGenerators.PropertyGenerator.class, 
-  property = "id")
-
-
-  @JsonIdentityInfo(scope = Region.class,
-  generator = ObjectIdGenerators.PropertyGenerator.class, 
-  property = "id")
-
-
-  @JsonIdentityInfo(scope = Signalement.class,
-  generator = ObjectIdGenerators.PropertyGenerator.class, 
-  property = "id")
-
-
-  @JsonIdentityInfo(scope = Signalnew.class,
-  generator = ObjectIdGenerators.PropertyGenerator.class, 
-  property = "id")
-
-
-  @JsonIdentityInfo(scope = Statut.class,
-  generator = ObjectIdGenerators.PropertyGenerator.class, 
-  property = "id")
-
-  @JsonIdentityInfo(scope = Type.class,
-  generator = ObjectIdGenerators.PropertyGenerator.class, 
-  property = "id")
-
-
-  @JsonIdentityInfo(scope = Userfront.class,
-  generator = ObjectIdGenerators.PropertyGenerator.class, 
-  property = "id")
-
-  @JsonIdentityInfo(scope = Utilisateur.class,
-  generator = ObjectIdGenerators.PropertyGenerator.class, 
-  property = "id")

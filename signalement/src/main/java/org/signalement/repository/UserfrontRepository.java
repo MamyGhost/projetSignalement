@@ -11,5 +11,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Mamitiana
  */
 public interface UserfrontRepository extends JpaRepository<Userfront, Integer> {
-   
+    
 }

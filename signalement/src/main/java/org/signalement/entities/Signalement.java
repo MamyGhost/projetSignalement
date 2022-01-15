@@ -5,11 +5,11 @@
  */
 package org.signalement.entities;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,10 +20,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 /**
  *
@@ -34,7 +39,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Signalement.findAll", query = "SELECT s FROM Signalement s")})
-  @JsonIdentityInfo(scope = Signalement.class,
+@JsonIdentityInfo(scope = Signalement.class,
   generator = ObjectIdGenerators.PropertyGenerator.class, 
   property = "id")
 public class Signalement implements Serializable {
@@ -55,7 +60,7 @@ public class Signalement implements Serializable {
     private BigDecimal latitude;
     @Column(name = "Longitude")
     private BigDecimal longitude;
-    @JoinColumn(name = "Utilisateur", referencedColumnName = "Id")
+    @JoinColumn(name = "Utilisateur", referencedColumnName = "Id") 
     @ManyToOne
     private Utilisateur utilisateur;
     @JoinColumn(name = "Type", referencedColumnName = "Id")
@@ -64,12 +69,14 @@ public class Signalement implements Serializable {
     @JoinColumn(name = "Region", referencedColumnName = "Id")
     @ManyToOne
     private Region region;
-    @JoinColumn(name = "Statut", referencedColumnName = "Id")
+    @JoinColumn(name = "Statut", referencedColumnName = "Id") 
     @ManyToOne
     private Statut statut;
     @JoinColumn(name = "Signalnew", referencedColumnName = "Id")
     @ManyToOne
     private Signalnew signalnew;
+    @OneToMany(mappedBy = "signalement")
+    private List<Photo> photoList;
 
     public Signalement() {
     }
@@ -118,14 +125,6 @@ public class Signalement implements Serializable {
         this.longitude = longitude;
     }
 
-    public Utilisateur getUtilisateur() {
-        return utilisateur;
-    }
-
-    public void setUtilisateur(Utilisateur utilisateur) {
-        this.utilisateur = utilisateur;
-    }
-
     public Type getType() {
         return type;
     }
@@ -158,6 +157,27 @@ public class Signalement implements Serializable {
         this.signalnew = signalnew;
     }
 
+    @XmlTransient
+    public List<Photo> getPhotoList() {
+        return photoList;
+    }
+
+    public void setPhotoList(List<Photo> photoList) {
+        this.photoList = photoList;
+    }
+
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
+    }
+
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
+    }
+
+    
+    
+    
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -167,7 +187,6 @@ public class Signalement implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Signalement)) {
             return false;
         }
@@ -182,5 +201,18 @@ public class Signalement implements Serializable {
     public String toString() {
         return "org.signalement.entities.Signalement[ id=" + id + " ]";
     }
+
+    public Signalement(Integer id, String description, Date daty, BigDecimal latitude, BigDecimal longitude, Type type, Statut statut, Signalnew signalnew) {
+        this.id = id;
+        this.description = description;
+        this.daty = daty;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.type = type;
+        this.statut = statut;
+        this.signalnew = signalnew;
+    }
+    
+    
     
 }

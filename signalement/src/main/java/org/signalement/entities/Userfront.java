@@ -5,10 +5,8 @@
  */
 package org.signalement.entities;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
-import java.util.List;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,10 +17,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 /**
  *
@@ -36,7 +35,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @JsonIdentityInfo(scope = Userfront.class,
   generator = ObjectIdGenerators.PropertyGenerator.class, 
   property = "id")
-
 public class Userfront implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -52,9 +50,7 @@ public class Userfront implements Serializable {
     @JoinColumn(name = "Region", referencedColumnName = "Id")
     @ManyToOne
     private Region region;
-    @OneToMany(mappedBy = "userfront")
-    private List<Tokenfront> tokenfrontList;
-
+   
     public Userfront() {
     }
 
@@ -82,7 +78,7 @@ public class Userfront implements Serializable {
         return password;
     }
 
-    public void setPassword(String password) {
+     public void setPassword(String password) {
         this.password = password;
     }
 
@@ -94,15 +90,6 @@ public class Userfront implements Serializable {
         this.region = region;
     }
 
-    @XmlTransient
-    public List<Tokenfront> getTokenfrontList() {
-        return tokenfrontList;
-    }
-
-    public void setTokenfrontList(List<Tokenfront> tokenfrontList) {
-        this.tokenfrontList = tokenfrontList;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -112,7 +99,7 @@ public class Userfront implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
+      
         if (!(object instanceof Userfront)) {
             return false;
         }

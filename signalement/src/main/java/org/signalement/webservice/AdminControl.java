@@ -29,26 +29,26 @@ public class AdminControl {
     @Autowired
     private AdminRepository AdminRepository;
     
-    @GetMapping("/wb/admin")
+    @GetMapping("/admin")
     public List<Admin> listAdmin(){
     // select * from admin
     return AdminRepository.findAll();
 }
     
-    @GetMapping("/wb/admin/{id}")
+    @GetMapping("/admin/{id}")
     public Admin listAdmin(@PathVariable Integer id){
     // select * from admin where id =
     return AdminRepository.findById(id).get();
 }
     
-    @PostMapping("/wb/admin")
+    @PostMapping("/admin")
     public Admin save(@RequestBody Admin admin){
         // inserte admin
     return AdminRepository.save(admin);
     }
     
     
-    @PutMapping("/wb/admin/{id}")
+    @PutMapping("/admin/{id}")
      public ResponseEntity<Admin> update(@PathVariable("id") Integer id, @RequestBody Admin admin) {
     Optional<Admin> tutorialData = AdminRepository.findById(id);
 

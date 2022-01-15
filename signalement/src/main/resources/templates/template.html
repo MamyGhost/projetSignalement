@@ -21,6 +21,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Main CSS-->
     <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+    <!-- <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}"> -->
     <!-- Font-icon css-->
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
@@ -96,12 +97,10 @@
       </div>
       <ul class="app-menu">
         <li><a class="app-menu__item" href="index.html"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
-        <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">UI Elements</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+        <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">Gestion de ressource</span><i class="treeview-indicator fa fa-angle-right"></i></a>
           <ul class="treeview-menu">
-            <li><a class="treeview-item" href="bootstrap-components.html"><i class="icon fa fa-circle-o"></i> Bootstrap Elements</a></li>
-            <li><a class="treeview-item" href="https://fontawesome.com/v4.7.0/icons/" target="_blank" rel="noopener"><i class="icon fa fa-circle-o"></i> Font Icons</a></li>
-            <li><a class="treeview-item" href="ui-cards.html"><i class="icon fa fa-circle-o"></i> Cards</a></li>
-            <li><a class="treeview-item" href="widgets.html"><i class="icon fa fa-circle-o"></i> Widgets</a></li>
+            <li><a class="treeview-item" href="/manageResource/userFrontRsrc"><i class="icon fa fa-circle-o"></i> Gestion des utilisateurs Front</a></li>
+            <li><a class="treeview-item" href="/manageResource/signalementRsrc"><i class="icon fa fa-circle-o"></i>Gestion de Signalement</a></li>
           </ul>
         </li>
         <li><a class="app-menu__item" href="charts.html"><i class="app-menu__icon fa fa-pie-chart"></i><span class="app-menu__label">Charts</span></a></li>
@@ -133,15 +132,14 @@
         </li>
       </ul>
     </aside>
+    <section layout:fragment="content1"></section>
      <!-- Essential javascripts for application to work-->
     <script th:src="@{/js/jquery-3.2.1.min.js}"></script>
     <script th:src="@{/js/popper.min.js}"></script>
     <script th:src="@{/js/bootstrap.min.js}"></script>
     <script th:src="@{/js/main.js}"></script>
-     <!-- The javascript plugin to display page loading on top-->
+    <!-- The javascript plugin to display page loading on top-->
     <script th:src="@{/js/plugins/pace.min.js}"></script>
     <script type="text/javascript" th:src="@{/js/plugins/chart.js}"></script>
-    <section layout:fragment="content1"></section>
-    
     </body>
 </html>

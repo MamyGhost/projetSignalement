@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package org.signalement.repository;
-import java.util.Optional;
 import org.signalement.entities.Admin;
 import org.springframework.data.jpa.repository.JpaRepository;
 

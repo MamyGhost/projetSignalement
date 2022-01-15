@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template"     
+      lang="en">
+  <head>
+    <title>Front User Modification</title>
+    <meta charset="utf-8">
+  </head>
+  <body class="app sidebar-mini rtl">
+    <div layout:fragment="content1">
+      <main class="app-content">
+        <div class="row justify-content-center">
+        <div class="col-md-9">
+          <div class="tile">
+            <div class="row justify-content-center">
+              <div class="col">
+                <h3 class="tile-title">Modification information</h3>
+                <form  id="modif" action="/manageresource/updateuf" method="get"> 
+                  <div class="form-group">
+                    <fieldset disabled="">
+                      <label class="control-label" for="disabledInput">Id(UserFront)</label>
+                      <input class="form-control"  id="disabledInput" type="text" th:value="${user.getId()}" disabled>
+                    </fieldset>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-form-label" for="inputDefault">User name</label>
+                    <input th:value="${user.getUsername()}" class="form-control" name="username" id="inputDefault" type="text" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlSelect1">Region</label>
+                    <select class="form-control selectpicker" data-style="btn-success" name="region" id="exampleFormControlSelect1">
+                      <th:block th:each="r:${region}">
+                          <option th:text="${r.getNom()}" th:value="${r.getId()}"></option>
+                        </th:block>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-form-label" for="mdp1">Nouveau mot de passe</label>
+                    <input name="mdp" class="form-control" id="mdp1" type="password" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-form-label" for="mdp2">Confirmer le nouveau mot de passe</label>
+                    <input name="mdp2" class="form-control" id="mdp2" type="password" required>
+                  </div>
+                  <div class="tile-footer">
+                    <button name="id" class="btn btn-primary" th:value="${user.getId()}" type="submit">Submit</button>
+                    </div>
+                  </form>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      </main>
+      <script th:src="@{/js/plugins/sweetalert.min.js}"></script>
+      <script type="text/javascript">
+        document.getElementById("modif").addEventListener("submit",function(event){
+
+          var mdp1=document.getElementById("mdp1").value;
+          var mdp2=document.getElementById("mdp2").value;
+          if (mdp1 != mdp2) {
+              event.preventDefault();
+              swal("Mot de passe", "Veuillez ressaisir le mot de passe", "error");
+            }
+          return true;
+        }); 
+      </script>
+    </div>
+    
+  </body>
+</html>

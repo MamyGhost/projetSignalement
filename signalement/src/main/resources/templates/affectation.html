@@ -1,127 +1,132 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="template"     
-      lang="en">
-  <head>
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
-        <style type="text/css">
-            #map{ /* la carte DOIT avoir une hauteur sinon elle n'apparaît pas */
-                height:500px;
-            }
-        </style>
-        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
-    <title>Affectation</title>
-    <meta charset="utf-8">
-  </head>
-  <body class="app sidebar-mini rtl">
-    <div layout:fragment="content1">
-        <main class="app-content">
-            <div class="row justify-content-center">
-                <div class="col-md-10">
-                     <div id="map">
-                        <!-- Ici s'affichera la carte -->
-                    </div>
-                </div>
-                    <div class="col-md-10">
-                    <div class="tile">
-                      <h3 class="tile-title">Liste des signalements non affecte</h3>
-                      <table class="table table-hover table-responsive">
-                        <thead>
-                          <tr>
-                            <th>Titre</th>
-                            <th>Type</th>
-                            <th>Longitude</th>
-                            <th>Latitude</th>
-                            <th>Region</th>
-                            <th></th>
-                            <th></th>
-                            <th th:text="${testa}"></th>
-                          </tr>
-                        </thead>
-                        <tbody class ="clickb">
-                          <tr th:each="s:${signalement}">
-                            <td th:text="${s.getSignalnew().getTitre()}"></td>
-                            <td th:text="${s.getType().getNom()}"></td>
-                            <td class="lat" th:text="${s.getLatitude()}"></td>
-                            <td class="long" th:text="${s.getLongitude()}"></td>
-                            <form method="get" action="/admin/updateregion">
-                                 <td>
-                                <select  id="inputState" name="region" class="form-control">
-                                    <th:block th:each="r:${region}">
-                                        <option th:text="${r.getNom()}" th:value="${r.getId()}"></option>
-                                    </th:block>
-                                </select>
-                            </td>
-                            <td><button type="submit" name="id" th:value="${s.getId()}" class="btn btn-outline-primary">Affecter</button>
-                            </td>
-                            </form>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-        </main>
-        <script th:inline="javascript">
-          var size = [[${signalement.size()}]];
-          var dataLayer = new Array(0);
-          </script>
-        <script th:each="s:${signalement}" th:inline="javascript">
-            var tempy = new Array([[${s.getLatitude()}]],[[${s.getLongitude()}]]);
-            dataLayer.push(tempy);
-        </script>
-	<script th:inline="javascript">
-            // On initialise la latitude et la longitude de Paris (centre de la carte)
-            var lat = 48.852969;
-            var lon = 2.349903;
-            var macarte = null;
-            alert(dataLayer.length);
-            // Fonction d'initialisation de la carte
-            function initMap() {
-                // Créer l'objet "macarte" et l'insèrer dans l'élément HTML qui a l'ID "map"
-                macarte = L.map('map').setView([lat, lon], 11);
-                // Leaflet ne récupère pas les cartes (tiles) sur un serveur par défaut. Nous devons lui préciser où nous souhaitons les récupérer. Ici, openstreetmap.fr
-                L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
-                    // Il est toujours bien de laisser le lien vers la source des données
-                    attribution: 'données © <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
-                    minZoom: 1,
-                    maxZoom: 20
-                }).addTo(macarte);
-                    for(var i=0;i<dataLayer.length;i++)
-                    {
-                        var marker = L.marker([dataLayer[i][0],dataLayer[i][1]]).addTo(macarte);
-                    }
-                  
-            }
-            function clicktr(){
-                var tbody=$(".clickb");
-                var children = tbody.children();
-                for(let i = 0; i < children.length; i++)
-                {
-                    children.eq(i).click(function(){
-                    // Holds the product ID of the clicked element
-                    let latnew=children.eq(i).find(".lat").text();
-                    let lonnew=children.eq(i).find(".long").text();
-                    macarte.setView([latnew, lonnew], 11);
-                    var popup = L.popup({ offset: L.point(0, -30) });
-                                       
-                    popup
-                    .setLatLng([latnew, lonnew])
-                    .setContent("C' est ici")
-                    .openOn(macarte);
-              });
-                    
-                }
-            }
-            window.onload = function(){
-		// Fonction d'initialisation qui s'exécute lorsque le DOM est chargé
-		initMap();
-                clicktr();
-            };
-        </script>
-          
-    </div>
-    
-  </body>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="template" lang="en">
+
+<head>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin="" />
+  <style type="text/css">
+    #map {
+      /* la carte DOIT avoir une hauteur sinon elle n'apparaît pas */
+      height: 500px;
+    }
+  </style>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+  <title>Affectation</title>
+  <meta charset="utf-8">
+</head>
+
+<body class="app sidebar-mini rtl">
+  <div layout:fragment="content1">
+    <main class="app-content">
+      <div class="row justify-content-center">
+        <div class="col-md-10">
+          <div id="map">
+            <!-- Ici s'affichera la carte -->
+          </div>
+        </div>
+        <div class="col-md-10">
+          <div class="tile">
+            <h3 class="tile-title">Liste des signalements non affecte</h3>
+            <table class="table table-hover table-responsive">
+              <thead>
+                <tr>
+                  <th>Titre</th>
+                  <th>Type</th>
+                  <th>Longitude</th>
+                  <th>Latitude</th>
+                  <th>Region</th>
+                  <th></th>
+                  <th></th>
+                  <th th:text="${testa}"></th>
+                </tr>
+              </thead>
+              <tbody class="clickb">
+                <tr th:each="s:${signalement}">
+                  <td th:text="${s.getSignalnew().getTitre()}"></td>
+                  <td th:text="${s.getType().getNom()}"></td>
+                  <td class="lat" th:text="${s.getLatitude()}"></td>
+                  <td class="long" th:text="${s.getLongitude()}"></td>
+                  <form method="get" action="/admin/updateregion">
+                    <td>
+                      <select id="inputState" name="region" class="form-control">
+                        <th:block th:each="r:${region}">
+                          <option th:text="${r.getNom()}" th:value="${r.getId()}"></option>
+                        </th:block>
+                      </select>
+                    </td>
+                    <td><button type="submit" name="id" th:value="${s.getId()}"
+                        class="btn btn-outline-primary">Affecter</button>
+                    </td>
+                  </form>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script th:inline="javascript">
+      var size = [[${signalement.size()}]];
+      var dataLayer = new Array(0);
+    </script>
+    <script th:each="s:${signalement}" th:inline="javascript">
+      var tempy = new Array([[${ s.getLatitude() }]], [[${ s.getLongitude() }]]);
+      dataLayer.push(tempy);
+    </script>
+    <script th:inline="javascript">
+      // On initialise la latitude et la longitude de Paris (centre de la carte)
+      var lat = 48.852969;
+      var lon = 2.349903;
+      var macarte = null;
+      alert(dataLayer.length);
+      // Fonction d'initialisation de la carte
+      function initMap() {
+        // Créer l'objet "macarte" et l'insèrer dans l'élément HTML qui a l'ID "map"
+        macarte = L.map('map').setView([lat, lon], 11);
+        // Leaflet ne récupère pas les cartes (tiles) sur un serveur par défaut. Nous devons lui préciser où nous souhaitons les récupérer. Ici, openstreetmap.fr
+        L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+          // Il est toujours bien de laisser le lien vers la source des données
+          attribution: 'données © <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
+          minZoom: 1,
+          maxZoom: 20
+        }).addTo(macarte);
+        for (var i = 0; i < dataLayer.length; i++) {
+          var marker = L.marker([dataLayer[i][0], dataLayer[i][1]]).addTo(macarte);
+        }
+
+      }
+      function clicktr() {
+        var tbody = $(".clickb");
+        var children = tbody.children();
+        for (let i = 0; i < children.length; i++) {
+          children.eq(i).click(function () {
+            // Holds the product ID of the clicked element
+            let latnew = children.eq(i).find(".lat").text();
+            let lonnew = children.eq(i).find(".long").text();
+            macarte.setView([latnew, lonnew], 11);
+            var popup = L.popup({ offset: L.point(0, -30) });
+
+            popup
+              .setLatLng([latnew, lonnew])
+              .setContent("C' est ici")
+              .openOn(macarte);
+          });
+
+        }
+      }
+      window.onload = function () {
+        // Fonction d'initialisation qui s'exécute lorsque le DOM est chargé
+        initMap();
+        clicktr();
+      };
+    </script>
+
+  </div>
+
+</body>
+
 </html>

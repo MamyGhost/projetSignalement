@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="template" lang="en">
+
+<head>
+  <title>Ressources Management</title>
+  <meta charset="utf-8">
+</head>
+
+<body class="app sidebar-mini rtl">
+  <div layout:fragment="content1">
+    <main class="app-content">
+      <div class="row justify-content-around">
+        <div class="col-md-12">
+          <div class="tile">
+            <div class="row">
+              <h3 class="tile-title">Listes des Utilisateurs Front Office</h3>
+            </div>
+            <div class="row">
+              <div class="col-md-10">
+                <table class="table table-hover table-responsive">
+                  <thead>
+                    <tr>
+                      <th>Id</th>
+                      <th>User Name</th>
+                      <th>region</th>
+                      <th></th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody class="clickb">
+                    <tr th:each="user:${fontUserList}">
+                      <td th:text="${user.Id}"></td>
+                      <td th:text="${user.getUsername}"></td>
+                      <td th:text="${user.getRegion.getNom}"></td>
+                      <td>
+                        <a role="button" name="id" th:href="@{/manageResource/modifUF/{id}(id=${user.getId})}"
+                          class="btn btn-outline-primary">Modifier</a>
+                      </td>
+                      <td>
+                        <form th:action="@{/manageResource/deleteUF/{id}(id=${user.getId})}" method="get" onsubmit="return confDelete(this)">
+                          <button name="status" class="btn btn-danger" value="0" type="submit" >Supprimer</button> 
+                        </form>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="col-md-2">
+                <a role="button" name="id" href="/manageResource/formulaireUF"
+                  class="btn btn-outline-success">Ajouter</a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </main>
+    <script th:src="@{/js/plugins/sweetalert.min.js}"></script>
+    <script type="text/javascript">
+      function confDelete1(event) {
+        var ret=0;
+        swal({
+      		title: "Are you sure?",
+      		text: "Voulez-vous vraiment supprimer cet utilisateur??",
+      		type: "warning",
+      		showCancelButton: true,
+      		confirmButtonText: "Confirmer",
+      		cancelButtonText: "Annuler",
+      		closeOnConfirm: false,
+      		closeOnCancel: false
+      	},function(isConfirm,ret) {
+      		if (isConfirm) {
+            alert(ret);
+      			ret= 34;
+      		} else {
+      			swal("Cancelled", "Operation annulé", "error");
+            ret= 56;
+      		}
+      	});
+       
+        event.preventDefault();
+       
+      }
+
+      function confDelete(form){
+          // alert(form.getValue("status"));
+        // var temp=false;
+        swal({
+           title: "Are you sure?",
+           text: "Voulez-vous vraiment supprimer cet utilisateur??",
+           type: "warning",
+           showCancelButton: true,
+           confirmButtonText: "Confirmer",
+           cancelButtonText: "Annuler",
+           closeOnConfirm: true,
+           closeOnCancel: true
+         },temp=function(isConfirm) {
+           if (isConfirm) {
+            form.submit();
+           }
+         });
+        return false;
+      }
+    </script>
+  </div>
+
+</body>
+
+</html>
