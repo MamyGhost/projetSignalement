@@ -13,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -28,9 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "region")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Region.findAll", query = "SELECT r FROM Region r")
-    , @NamedQuery(name = "Region.findById", query = "SELECT r FROM Region r WHERE r.id = :id")
-    , @NamedQuery(name = "Region.findByNom", query = "SELECT r FROM Region r WHERE r.nom = :nom")})
+    @NamedQuery(name = "Region.findAll", query = "SELECT r FROM Region r")})
 public class Region implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -45,6 +45,9 @@ public class Region implements Serializable {
     private List<Userfront> userfrontList;
     @OneToMany(mappedBy = "region")
     private List<Signalement> signalementList;
+    @JoinColumn(name = "Province", referencedColumnName = "Id")
+    @ManyToOne
+    private Province province;
 
     public Region() {
     }
@@ -85,6 +88,14 @@ public class Region implements Serializable {
 
     public void setSignalementList(List<Signalement> signalementList) {
         this.signalementList = signalementList;
+    }
+
+    public Province getProvince() {
+        return province;
+    }
+
+    public void setProvince(Province province) {
+        this.province = province;
     }
 
     @Override

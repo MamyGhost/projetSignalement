@@ -25,11 +25,11 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Mamitiana
  */
 @Entity
-@Table(name = "type")
+@Table(name = "province")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Type.findAll", query = "SELECT t FROM Type t")})
-public class Type implements Serializable {
+    @NamedQuery(name = "Province.findAll", query = "SELECT p FROM Province p")})
+public class Province implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -39,13 +39,13 @@ public class Type implements Serializable {
     private Integer id;
     @Column(name = "Nom")
     private String nom;
-    @OneToMany(mappedBy = "type")
-    private List<Signalement> signalementList;
+    @OneToMany(mappedBy = "province")
+    private List<Region> regionList;
 
-    public Type() {
+    public Province() {
     }
 
-    public Type(Integer id) {
+    public Province(Integer id) {
         this.id = id;
     }
 
@@ -66,12 +66,12 @@ public class Type implements Serializable {
     }
 
     @XmlTransient
-    public List<Signalement> getSignalementList() {
-        return signalementList;
+    public List<Region> getRegionList() {
+        return regionList;
     }
 
-    public void setSignalementList(List<Signalement> signalementList) {
-        this.signalementList = signalementList;
+    public void setRegionList(List<Region> regionList) {
+        this.regionList = regionList;
     }
 
     @Override
@@ -84,10 +84,10 @@ public class Type implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Type)) {
+        if (!(object instanceof Province)) {
             return false;
         }
-        Type other = (Type) object;
+        Province other = (Province) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -96,7 +96,7 @@ public class Type implements Serializable {
 
     @Override
     public String toString() {
-        return "org.signalement.entities.Type[ id=" + id + " ]";
+        return "org.signalement.entities.Province[ id=" + id + " ]";
     }
     
 }
